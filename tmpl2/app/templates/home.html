@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+ 
+{% block title %}欢迎光临首页{% endblock %}
+ 
+{% block content %}
+
+{% include 'ad.html' %}
+这里是首页，欢迎光临
+<div>
+{% if request.user.is_authenticated %}
+    {{ request.user.username }},您好！
+{% else %}
+    请登陆，<a href="{% url 'add' 4 5 %}">登陆</a>
+{% endif %}
+</div>
+<div><a href="{{ request.path }}?{{ request.GET.urlencode }}&delete=1">当前网址加参数 delete </a>
+<div>{{ string }}</div>
+<div>
+    教程列表：
+    {% for i in TutorialList %}
+    {{i}}
+    {% endfor %}
+</div>
+<div>站点：{{info_dict.site}} 内容：{{info_dict.content}}
+<div>
+{% for key,value in info_dict.items %}
+    {{ key }}:{{ value }}
+{% endfor %}
+</div>
+<div>
+{% for item in List %}
+    {{ item }}{% if not forloop.last %},{% endif %}
+{% endfor %}
+</div>
+<div>
+<ul>
+{% for athlete in athlete_list %}
+    <li>{{ athlete.name }}</li>
+{% empty %}
+    <li>列表为空</li>
+{% endfor %}
+</ul>
+</div>
+<div>
+用<span style="color:red;">{<span>% url 'add' 4 5 %</span>}</span> 可以获取到链接： 
+<a href="{% url 'add' 4 5 %}">add</a><br>
+</div>
+<div>
+<a href="{% url 'grade' 84 %}">grade</a>
+</div>
+<div>
+<p>
+{% if var >= 90 %}
+成绩优秀
+{% elif var >= 80 %}
+成绩良好
+{% elif var >= 70 %}
+成绩一般
+{% elif var >= 60 %}
+需要努力
+{% elif var >= 0 %}
+不及格
+{% else %}
+成绩为空
+{% endif %}
+</p>
+</div>
+{% endblock %}
